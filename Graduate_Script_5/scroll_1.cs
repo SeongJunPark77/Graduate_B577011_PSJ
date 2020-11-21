@@ -1,0 +1,58 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+public class scroll_1 : MonoBehaviour
+{
+    // Start is called before the first frame update
+    public GameObject bigbro;
+    public GameObject scroll1;
+
+    GameObject back1;
+    float timeSpan;
+    float checkTime;
+    float limitTime;
+
+    void Start()
+
+    {
+        back1 = GameObject.Find("singlecanvas").transform.Find("back1").gameObject;
+        timeSpan = 0.0f;
+        checkTime = 1.0f;
+        limitTime = 2.0f;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        timeSpan += Time.deltaTime;
+
+        if (timeSpan < checkTime)
+        {
+            this.transform.position += new Vector3(0, -0.006f, 0);
+        }
+        else if (timeSpan >= checkTime)
+        {
+            this.transform.position += new Vector3(0, 0.006f, 0);
+
+            if (timeSpan >= limitTime)
+            {
+                timeSpan = 0.0f;
+            }
+        }
+    }
+
+    void OnTriggerEnter(Collider c)
+    {
+        if (gameObject != null) { 
+    
+            if (c.gameObject == bigbro)
+            {
+                GameObject.Find("scroll_sound").GetComponent<AudioSource>().Play();
+                scroll1.SetActive(true);
+                back1.SetActive(false);
+                Destroy(gameObject);
+            }
+    }
+    }
+}
